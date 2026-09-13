@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Little Birthday Journey - Salma Fauziyah 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #08080c;
+            --accent: #ff758c;
+            --accent-glow: rgba(255, 117, 140, 0.35);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .phone-container {
+            width: 100%;
+            max-width: 430px;
+            height: 100vh;
+            background: radial-gradient(circle at top, #1a1018 0%, var(--bg-color) 70%);
+            position: relative;
+            box-shadow: 0 0 60px rgba(0,0,0,0.9);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Ambient Background Glows */
+        .ambient-glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 117, 140, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            animation: pulseGlow 6s ease-in-out infinite alternate;
+        }
+        .glow-1 { top: -50px; left: -50px; }
+        .glow-2 { bottom: -50px; right: -50px; animation-delay: 3s; }
+
+        @keyframes pulseGlow {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0.9; }
+        }
+
+        /* Floating Elements Container (Hearts & Sparkles) */
+        .fx-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 2;
+        }
+        .particle {
+            position: absolute;
+            animation: floatUp 7s linear infinite;
+            bottom: -30px;
+            opacity: 0;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.5) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.7; }
+            85% { opacity: 0.7; }
+            100% { transform: translateY(-110vh) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
+        /* Slide System with 1s Fade Animation */
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 35px;
+            text-align: center;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in-out;
+        }
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Typography & Components */
+        .opening-tag {
+            font-size: 0.75rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        h1, .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 15px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #fff 30%, #ff8fa3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle, .slide-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .age-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 117, 140, 0.12);
+            color: #ff8fa3;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 117, 140, 0.25);
+        }
+
+        /* Polaroid Gallery inside Slide (No Bubble) */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .polaroid {
+            background: #fff;
+            padding: 8px 8px 20px 8px;
+            border-radius: 6px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transform: rotate(-2deg);
+        }
+        .polaroid:nth-child(even) {
+            transform: rotate(2deg);
+        }
+        .polaroid-img {
+            width: 100%;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .polaroid-caption {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.7rem;
+            color: #333;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        /* Timeline inside Slide (No Bubble) */
+        .timeline {
+            position: relative;
+            padding-left: 20px;
+            text-align: left;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 4px; top: 4px; bottom: 4px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent), rgba(255,117,140,0.1));
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 18px;
+        }
+        .timeline-item:last-child { margin-bottom: 0; }
+        .timeline-dot {
+            position: absolute;
+            left: -20px; top: 3px;
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        .timeline-date {
+            font-size: 0.7rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        .timeline-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Navigation Buttons */
+        .btn-container {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+            justify-content: center;
+            width: 100%;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff758c, #ff416c);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 25px var(--accent-glow);
+            transition: transform 0.2s;
+        }
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+        .btn-primary:active, .btn-secondary:active {
+            transform: scale(0.95);
+        }
+
+        /* Music Floating Control */
+        .music-control {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            z-index: 100;
+            background: rgba(20, 20, 28, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        .music-control.playing {
+            animation: pulseMusic 2s infinite;
+        }
+        @keyframes pulseMusic {
+            0% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0.5); }
+            70% { box-shadow: 0 0 0 12px rgba(255, 117, 140, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 117, 140, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="phone-container">
+        <!-- Ambient Background Lights -->
+        <div class="ambient-glow glow-1"></div>
+        <div class="ambient-glow glow-2"></div>
+
+        <!-- Floating Particles Container -->
+        <div class="fx-container" id="fxContainer"></div>
+
+        <!-- Slide 1: Opening Cinematic -->
+        <div class="slide active" id="slide-0">
+            <div class="opening-tag">✨ SPECIAL SURPRISE ✨</div>
+            <h1>A Little Birthday For My Little Princess</h1>
+            <p class="subtitle">Ucapan Selamat Ulang Tahun ke-20 Pacarku yang Cantik dan Menggemaskan.</p>
+            <button class="btn-primary" onclick="nextSlide()">Open Your Gift 💌</button>
+        </div>
+
+        <!-- Slide 2: Greeting & Age -->
+        <div class="slide" id="slide-1">
+            <div class="age-badge">🎉 Si Cantik Kepala Dua</div>
+            <h2 class="slide-title">Salma Fauziyah</h2>
+            <p class="slide-desc">Happy Birthdayy Cantikkuu, kamu pasti tidaa espek aku bikin inii, kamu tauu? aku berharap banyak sama kamuu, aku berharap banyak sama kitaa, di usia 20 tahun kamu ini semoga kamu makin dewasa yaa seng, makin bisa kontrol diri kamu, mood kamu dan ngga cuma kamu semoga aku juga bisa lebih dewasa sama masalah-masalah kita, aku mauu kamu punya pandangan yang luas tentang apapun dari nyelesain masalah sama aku, sama diri kamu, sama keluarga kamu, aku mau kamu berkembang lebih banyak dari segi pengetahuan sma pemahaman, kamu punyaa banyak tanggung jawab, ada ina sama asyaa yang butuh sosok kaka dihidup mereka bb, jadi contoh yang baik yaa? aku tau kamu bisaa, aku sayangg kamuu. </p>
+            <div class="btn-container">
+                <button class="btn-primary" onclick="nextSlide()">Lanjut</button>
+            </div>
+        </div>
+
+        <!-- Slide 3: Timeline Hubungan -->
+        <div class="slide" id="slide-2">
+            <h2 class="slide-title" style="font-size: 1.8rem; margin-bottom: 20px;">Our Timeline 🕰️</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">09 Januari 2023</div>
+                    <div class="timeline-text">Hari dimana aku minta kamu temenin potong rambut abis itu makan sama keluargaku di saung kebon nusantara, pulangnya kamu jadi pacar pangeran makanya tgl ini spesial.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">10 Januari 2023 - 13 september 2026</div>
+                    <div class="timeline-text">3 Tahun 8 Bulan 4 hari sejak kita resmi pacaran, dari sekian banyaknya aku sama kamu dibantai masalah banyak kesempatan kita buat mutusin ngga saling kenal lagi, nyata nya aku masih sama kamu.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Hari Ini 14 September 2026</div>
+                    <div class="timeline-text">Happy 20th birthday, Sayangg. Sekali lagi, Aku masih sama kamu.</div>
+                </div>
+            </div>
+            <div class="btn-container">
+                <button class="btn-primary" onclick="nextSlide()">Lanjut</button>
+            </div>
+        </div>
+
+        <!-- Slide 4: Galeri Foto Polaroid -->
+        <div class="slide" id="slide-3">
+            <h2 class="slide-title" style="font-size: 1.8rem; margin-bottom: 5px;">Sweet Memories 📸</h2>
+            <p class="slide-desc" style="margin-bottom: 15px;">Our Memories.</p>
+            <div class="gallery-grid">
+                <div class="polaroid">
+                    <img src="https://github.com/arkfixl/raks2006/blob/main/WhatsApp%20Image%202026-09-13%20at%2019.23.57%20(1).jpeg?raw=true" alt="Memory 1" class="polaroid-img">
+                    <div class="polaroid-caption">My Favorite Smile ✨</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://github.com/arkfixl/raks2006/blob/main/WhatsApp%20Image%202026-09-13%20at%2019.23.56.jpeg?raw=true" alt="Memory 2" class="polaroid-img">
+                    <div class="polaroid-caption">16-09-2023 🌹</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://github.com/arkfixl/raks2006/blob/main/WhatsApp%20Image%202026-09-13%20at%2019.23.55.jpeg?raw=true" alt="Memory 2" class="polaroid-img">
+                    <div class="polaroid-caption">Endless Joy 💖</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://github.com/arkfixl/raks2006/blob/main/WhatsApp%20Image%202026-09-13%20at%2019.23.57.jpeg?raw=true" alt="Memory 2" class="polaroid-img">
+                    <div class="polaroid-caption">Flower of Bouquet 💐</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://github.com/arkfixl/salma/blob/main/WhatsApp%20Image%202026-09-13%20at%2020.54.46.jpeg?raw=true" alt="Memory 2" class="polaroid-img">
+                    <div class="polaroid-caption">In That Moment 🖤</div>
+                </div>
+                <div class="polaroid">
+                    <img src="https://github.com/arkfixl/salmafauziyah/blob/main/WhatsApp%20Image%202026-09-13%20at%2022.53.30.jpeg?raw=true" alt="Memory 2" class="polaroid-img">
+                    <div class="polaroid-caption">night story 🔞</div>
+                </div>
+            </div>
+            <div class="btn-container">
+                <button class="btn-primary" onclick="nextSlide()">Lanjut</button>
+            </div>
+        </div>
+
+        <!-- Slide 5: Pesan Personal & Closing -->
+        <div class="slide" id="slide-4">
+            <h2 class="slide-title" style="font-size: 1.8rem; margin-bottom: 15px;">With All My Love ❤️</h2>
+            <p class="slide-desc" style="margin-bottom: 15px;">"Terima kasih udaa jadi perempuan yang kuat yang bisa turunin egoku yang tahan sama sifatku. Apapun yang terjadi kedepannya, aku bakal selalu ada buat dukung kamu."</p>
+            <p class="slide-desc" style="margin-bottom: 0; font-weight: 500; color: #ff8fa3;">Cintai aku trus ya. Selamat ulang tahun sekali lagi, Salma Fauziyah.</p>
+            <div class="btn-container">
+                <button class="btn-primary" onclick="goToSlide(0)">Ulangi dari Awal 🔄</button>
+            </div>
+        </div>
+
+        <!-- Floating Music Control Button -->
+        <div class="music-control" id="musicBtn" onclick="toggleMusic()" style="display: none;">
+            🎵
+        </div>
+
+        <!-- Audio Backsound -->
+        <audio id="bgMusic" loop>
+            <source src="https://raw.githubusercontent.com/arkfixl/raks2006/main/nadhif%20basalamah%20-%20penjaga%20hati%20Official%20Music%20Video.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function updateSlides() {
+            slides.forEach((slide, index) => {
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+        }
+
+        function nextSlide() {
+            if (currentSlide === 0) {
+                music.currentTime = 19; // Musik diatur mulai langsung dari detik ke-19
+                music.play().then(() => {
+                    musicBtn.classList.add('playing');
+                }).catch(e => {
+                    console.log("Audio autoplay restricted");
+                });
+                musicBtn.style.display = 'flex';
+            }
+
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlides();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlides();
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                musicBtn.classList.add('playing');
+            } else {
+                music.pause();
+                musicBtn.classList.remove('playing');
+            }
+        }
+
+        const symbols = ['❤️', '✨', '💖', '⭐', '💫'];
+
+        function createParticle() {
+            const container = document.getElementById('fxContainer');
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            
+            particle.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            particle.style.fontSize = (Math.random() * 12 + 10) + 'px';
+            
+            container.appendChild(particle);
+
+            setTimeout(() => {
+                particle.remove();
+            }, 9000);
+        }
+        setInterval(createParticle, 400);
+    </script>
+</body>
+</html>
